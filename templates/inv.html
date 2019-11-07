@@ -1,104 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<link>
-<meta charset="UTF-8">
-<title>Inventory Management</title>
-<head>
-    <!--bootstrap css link-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{#step 8: used jinja2 framework to create a template for inheritance later on#}
+{#        - refactored base template#}
+{#        - main keywords, {% extends %},{% block %}{% endblock %},request object (used to get data from tables)#}
 
-</head>
-<body>
-<!--navigation bar on web page -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-success">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+{% extends 'base.html' %}
+
+{% block title %}
+    Inventory
+{% endblock %}
+
+{% block styles %}
+
+    <link rel="stlesheet" href="/static/css/main.css">
+
+{% endblock %}
+
+{% block content %}
+
+    <body>
+    <!--navigation bar on web page -->
+
+    <!-- jambotron -->
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Inventory Page</h1>
+            <p class="lead">For inventory management</p>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add Inventory
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <!--   <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/users">Users</a>
-            </li>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/inventory">Inventory</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contacts">Contacts</a>
-            </li>
-            <!--     <li class="nav-item">
-                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                 </li> -->
-        </ul>
-    </div>
-</nav>
 
-<!-- jambotron -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inventory</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Inventory Page</h1>
-        <p class="lead">For inventory management</p>
-    </div>
-</div>
+                    <form action="/inventory" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Inv Name</label>
+                            <input name = "inventory" type="text" class="form-control" aria-describedby="emailHelp"
+                                   placeholder="Enter inventory name">
+{#                            used name attribute to name input so as to identify every piece of data that'll come through that dialog box#}
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Add Inventory
-</button>
+                        </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Inventory</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Type</label>
+                            <select name = "type"  class="form-control" id="exampleFormControlSelect1">
+                                <option value ="product">Product</option>
+                                <option value ="service">Service</option>
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Inv Name</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                               placeholder="Enter inventory name">
+                            </select>
+                        </div>
 
-                    </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Buying Price</label>
+                            <input name = "buyingPrice" type="text" class="form-control" aria-describedby="emailHelp"
+                                   placeholder="Enter buying price">
 
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Type</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Product</option>
-                            <option>Service</option>
+                        </div>
+                        <!-- <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                             <button type="button" class="btn btn-primary">Save changes</button>
+                         </div> -->
 
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Buying Price</label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp"
-                               placeholder="Enter buying price">
-
-                    </div>
-                    <!-- <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                         <button type="button" class="btn btn-primary">Save changes</button>
-                     </div> -->
-
-                    <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -133,19 +113,127 @@
         </tr>
         </tbody>
     </table>
+{% endblock %}
 
-</div>
 
-<!--boostrap js scripts-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-</body>
-</html>
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<link>#}
+{#<meta charset="UTF-8">#}
+{#<title>Inventory Management</title>#}
+{#<head>#}
+{#    <!--bootstrap css link-->#}
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"#}
+{#          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+{##}
+{#</head>#}
+{#<body>#}
+{#<!--navigation bar on web page -->#}
+{##}
+{#<!-- jambotron -->#}
+{##}
+{#<div class="jumbotron jumbotron-fluid">#}
+{#    <div class="container">#}
+{#        <h1 class="display-4">Inventory Page</h1>#}
+{#        <p class="lead">For inventory management</p>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Button trigger modal -->#}
+{#<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">#}
+{#    Add Inventory#}
+{#</button>#}
+{##}
+{#<!-- Modal -->#}
+{#<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"#}
+{#     aria-hidden="true">#}
+{#    <div class="modal-dialog" role="document">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="exampleModalLabel">Inventory</h5>#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{##}
+{#                <form>#}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputEmail1">Inv Name</label>#}
+{#                        <input type="text" class="form-control" aria-describedby="emailHelp"#}
+{#                               placeholder="Enter inventory name">#}
+{##}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleFormControlSelect1">Type</label>#}
+{#                        <select class="form-control" id="exampleFormControlSelect1">#}
+{#                            <option>Product</option>#}
+{#                            <option>Service</option>#}
+{##}
+{#                        </select>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label for="exampleInputEmail1">Buying Price</label>#}
+{#                        <input type="text" class="form-control" aria-describedby="emailHelp"#}
+{#                               placeholder="Enter buying price">#}
+{##}
+{#                    </div>#}
+{#                    <!-- <div class="modal-footer">#}
+{#                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+{#                         <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                     </div> -->#}
+{##}
+{#                    <button type="submit" class="btn btn-success">Submit</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#    <table class="table table-striped">#}
+{#        <thead class="thead-dark">#}
+{#        <tr>#}
+{#            <th scope="col">ID</th>#}
+{#            <th scope="col">Inv Name</th>#}
+{#            <th scope="col">Type</th>#}
+{#            <th scope="col">Buying Price</th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        <tr>#}
+{#            <th scope="row">1</th>#}
+{#            <td>Eggs</td>#}
+{#            <td>Product</td>#}
+{#            <td>20 shs</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th scope="row">2</th>#}
+{#            <td>Bananas</td>#}
+{#            <td>Product</td>#}
+{#            <td>30shs</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th scope="row">3</th>#}
+{#            <td>Haircut</td>#}
+{#            <td>Service</td>#}
+{#            <td>100 shs</td>#}
+{#        </tr>#}
+{#        </tbody>#}
+{#    </table>#}
+{##}
+{#<!--boostrap js scripts-->#}
+{#<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
+{#        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"#}
+{#        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"#}
+{#        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"#}
+{#        crossorigin="anonymous"></script>#}
+{##}
+{#</body>#}
+{#</html>#}
