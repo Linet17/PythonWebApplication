@@ -24,11 +24,12 @@ db = SQLAlchemy(app)
 
 #import the models,comes right after instantiating SQLAlchemy object
 from models.inventories import InventoryModel
-
 #use a decorator that before any request is made,it looks for specific tables defined in models that  have been created in db,if yes doesnt create any..if no,creates table
 @app.before_first_request
 def createTable():
+    # db.drop_all()
     db.create_all()
+
 
 # a route is a path that you can access a html page,this line creates a path for the app
 # by default this will be our 'Home' page/route
@@ -58,9 +59,24 @@ def inv_page():
         type = request.form['type']
         buyingPrice = request.form['buyingPrice']
 
-        print(invName)
-        print(type)
-        print(buyingPrice)
+        # create/instantiate a python object of the class(s) that have the form(s) you create
+        #call column in table in table class ie InventoryModel class = value gotten from modal form eg inv_name=invName
+        me = InventoryModel(inv_name=invName, inv_type=type, buyingPrice=buyingPrice)
+        # adding above object to user session not the flask session but the SQLQlchemy session
+        db.session.add(me)
+        db.session.commit()
+        print("Successfully run!")
+
+    #getting all the records in the table in the abcDB DB
+    #instantiate an object where you'll run your query
+    #query - acts as a select,a class
+    #all() is a method,selecting all
+    value = InventoryModel.query.all()
+    print(value)
+
+        # print(invName)
+        # print(type)
+        # print(buyingPrice)
 
     return render_template('inv.html')
 

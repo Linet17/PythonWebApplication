@@ -6,6 +6,8 @@ class Developement:
     #to be able to see errors,set debug as true
     DEBUG=True
     SECRET_KEY='hvkhvkjblhiy856698uijhv'
+    # to mute sqlalchemy notifictions in python console
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class Production:
     pass
