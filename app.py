@@ -48,7 +48,12 @@ def users():
 
 @app.route('/about')
 def about_page():
+    if request.method =='POST':
+        invName = request.form['inventory']
+        type = request.form['type']
+        buyingPrice = request.form['buyingPrice']
     return render_template('about.html')
+
 
 #GET USED TO RENDER TEMPLATES
 @app.route('/inventory',methods=['GET','POST'])
