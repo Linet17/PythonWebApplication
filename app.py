@@ -8,7 +8,7 @@
 
 #read on http - used for communication and transmission of messages across that internet
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from configs import Developement
 
@@ -23,7 +23,11 @@ app.config.from_object(Developement)
 db = SQLAlchemy(app)
 
 #import the models,comes right after instantiating SQLAlchemy object
+# from models.inventories import InventoryModel
+
 from models.inventories import InventoryModel
+from models.sales import SalesModel
+
 #use a decorator that before any request is made,it looks for specific tables defined in models that  have been created in db,if yes doesnt create any..if no,creates table
 @app.before_first_request
 def createTable():
@@ -78,12 +82,22 @@ def inv_page():
     #all() is a method,selecting all
     value = InventoryModel.query.all()
     print(value)
+    for i in value:
+        print(i.inv_name,i.inv_type,i.buyingPrice)
 
         # print(invName)
         # print(type)
         # print(buyingPrice)
 
-    return render_template('inv.html')
+    return render_template('inv.html', inventories=value)
+
+@app.route('/sales',methods=['POST'])
+def sales():
+    #if the request method is post,then
+    if request.method =='POST':
+        qnty = request.form['quantity']
+        print(qnty)
+        return redirect(url_for('inv_page'))
 
 
 @app.route('/contacts')
