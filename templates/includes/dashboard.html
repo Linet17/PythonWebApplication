@@ -1,0 +1,41 @@
+{#step 8: used jinja2 framework to create a template for inheritance later on#}
+{#        - refactored base template#}
+{#        - main keywords, {% extends %},{% block %}{% endblock %},request object (used to get data from tables)#}
+
+
+{% extends 'dashboard.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block styles %}
+
+    <link rel="stlesheet" href="/static/css/main.css">
+
+{% endblock %}
+
+{% block content %}
+
+    <body>
+    <!--navigation bar on web page -->
+
+    <!-- jambotron -->
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Analytics ashboard </h1>
+{#            <p class="lead">For inventory management</p>#}
+        </div>
+    </div>
+
+    <div id="chart">
+        <embedded type="image/svg+xml" src={{ pie_data }}>
+        </embedded>
+    </div>>
+
+    </div>
+
+
+    </body>
+{% endblock %}
